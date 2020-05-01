@@ -1,0 +1,18 @@
+{
+  "name": "dungeon-dice",
+  "version": "1.0.0",
+  "description": "Dice Rolling Discord Bot for Dungeons and Dragons",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Logan Tibbetts",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "prettier": "2.0.5"
+  }
+}
