@@ -30,5 +30,7 @@ All commands will start with ``!r`` followed by additional information.
 * Combining Reroll with Advantage / Disadvantage
    * I did my best to follow the PHB rulling for thes senarios
 
+## Adding to a Server
 
+Click [here](https://discordapp.com/api/oauth2/authorize?client_id=704166655357354042&permissions=67584&scope=bot)!
  
