@@ -28,7 +28,7 @@ All commands will start with ``!r`` followed by additional information.
       * If the roll is [3, 4] nothing changes
       * Any dice that is rerolled will be output in the discarded list
 * Combining Reroll with Advantage / Disadvantage
-   * I did my best to follow the PHB rulling for thes senarios
+   * I did my best to follow the PHB rulling for these senarios
 
 ## Adding to a Server
 
