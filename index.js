@@ -77,6 +77,10 @@ bot.on('message', message => {
   run_message(message)
 })
 
+bot.on('ready', () => {
+  bot.user.setActivity("!r", { type: "LISTENING", url: "https://www.github.com/LTibbetts/dungeon-dice"})
+})
+
 // bot.on('messageUpdate', (oldMessage, newMessage) => {
 //   if(oldMessage.content !== newMessage.content){
 //     messageHistory.find(oldMessage.content)[1]
