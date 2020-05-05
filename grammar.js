@@ -102,10 +102,10 @@ case 7:
 this.$ = new RollInfo(Number(yytext), []);
 break;
 case 8:
-this.$ = roll($$[$0])
+this.$ = rolling.roll($$[$0])
 break;
 case 9:
-this.$ = rollWithMods($$[$0-1], $$[$0])
+this.$ = rolling.rollWithMods($$[$0-1], $$[$0])
 break;
 case 10:
 this.$ = $$[$0-1].concat($$[$0])
@@ -114,13 +114,13 @@ case 11:
 this.$ = $$[$0]
 break;
 case 12:
-this.$ = [new Reroll(yytext)]
+this.$ = [new Mods.Reroll(yytext)]
 break;
 case 13:
-this.$ = [new Advantage()]
+this.$ = [new Mods.Advantage()]
 break;
 case 14:
-this.$ = [new Disadvantage()]
+this.$ = [new Mods.Disadvantage()]
 break;
 case 15:
 this.$ = $$[$0-1].substring(2) + "\n\t";
@@ -280,195 +280,9 @@ parse: function parse(input) {
 }};
 
 
-class Reroll {
-  constructor(input){
-    this.reroll_below = Number(input.substring(1))
-  }
-}
-
-class Advantage {
-  constructor(){
-
-  }
-}
-
-class Disadvantage {
-  constructor(){
-
-  }
-}
-
-class RollInfo {
-  constructor(kept, discarded){
-    if(Array.isArray(kept)){
-      this.kept = kept;
-    }else{
-      this.kept = [kept];
-    }
-
-    if(Array.isArray(discarded)){
-      this.discarded = discarded;
-    }else{
-      this.discarded = discarded;
-    }
-  }
-
-  get_sum() {
-    return this.kept.reduce((a,b) => a + b, 0);
-  }
-
-  get_kept() {
-    return this.kept;
-  }
-
-  get_discarded() {
-    return this.discarded;
-  }
-
-  add_other(roll_info) {
-    this.kept = this.kept.concat(roll_info.get_kept());
-    this.discarded = this.discarded.concat(roll_info.get_discarded());
-    return this;
-  }
-
-  subtract_other(roll_info) {
-    this.kept = this.kept.concat(roll_info.get_kept().map(value => -value));
-    this.discarded = this.discarded.concat(roll_info.get_discarded());
-    return this;
-  }
-
-  get_output(){
-    var output = "";
-    if(this.discarded.length > 0){
-      output = output + "Discarded: " + JSON.stringify(this.discarded) + "\n\tKeeping: ";
-    }
-    output = output + JSON.stringify(this.kept) + " = ";
-    output = output + this.get_sum();
-    return output;
-  }
-};
-
-var randomInt = function(max){
-  min = 1;
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-var roll = function(dice_input){
-  dice_info = dice_input.split('d');
-  number_of_dice = dice_info[0];
-  size_of_dice = dice_info[1];
-  kept = [];
-  discarded = [];
-  for(i = 0; i < number_of_dice; i++){
-    kept = kept.concat([randomInt(size_of_dice)])
-  }
-  return new RollInfo(kept, discarded);
-};
-
-var checkListFor = function(arr, t){
-  res = arr.filter(elem => elem instanceof t);
-  return res.length != 0;
-}
-
-var getReroll = function(arr){
-  res = arr.filter(elem => elem instanceof Reroll);
-  return res[0]
-}
-
-var rollWithMods = function(dice_input, mods){
-  kept = []
-  discarded = []
-  dice_info = dice_input.split('d');
-  number_of_dice = dice_info[0];
-  size_of_dice = dice_info[1];
-  hasAdvantage = checkListFor(mods, Advantage);
-  hasDisdvantage = checkListFor(mods, Disadvantage);
-  hasReroll = checkListFor(mods, Reroll);
-  if(hasReroll && hasAdvantage) {
-    reroll_info = getReroll(mods);
-    reroll_number = reroll_info.reroll_below;
-    for(i = 0; i < number_of_dice; i++){
-      r1 = randomInt(size_of_dice);
-      r2 = randomInt(size_of_dice);
-      if(r1 <= reroll_number && r2 <= reroll_number){
-        min_val = Math.min(r1, r2);
-        max_val = Math.max(r1, r2);
-        discarded = discarded.concat([min_val]);
-        r3 = randomInt(size_of_dice);
-        discarded = discarded.concat([Math.min(max_val, r3)]);
-        kept = kept.concat([Math.max(max_val, r3)]);
-      } else if(r1 <= reroll_number){
-        discarded = discarded.concat([r1]);
-        r1 = randomInt(size_of_dice)
-        discarded = discarded.concat([Math.min(r1, r2)]);
-        kept = kept.concat([Math.max(r1, r2)]);
-      } else if (r2 <= reroll_number) {
-        discarded = discarded.concat([r2]);
-        r2 = randomInt(size_of_dice)
-        discarded = discarded.concat([Math.min(r1, r2)]);
-        kept = kept.concat([Math.max(r1, r2)]);
-      } else {
-        kept = kept.concat([Math.max(r1, r2)])
-        discarded = discarded.concat([Math.min(r1, r2)])
-      }
-    }
-  } else if(hasReroll && hasDisdvantage) {
-    reroll_info = getReroll(mods);
-    reroll_number = reroll_info.reroll_below;
-    for(i = 0; i < number_of_dice; i++){
-      r1 = randomInt(size_of_dice);
-      r2 = randomInt(size_of_dice);
-      if(r1 <= reroll_number && r2 <= reroll_number){
-        min_val = Math.min(r1, r2);
-        max_val = Math.max(r1, r2);
-        discarded = discarded.concat([min_val]);
-        r3 = randomInt(size_of_dice);
-        discarded = discarded.concat([Math.max(max_val, r3)]);
-        kept = kept.concat([Math.min(max_val, r3)]);
-      } else if(r1 <= reroll_number){
-        discarded = discarded.concat([r1]);
-        r1 = randomInt(size_of_dice)
-        discarded = discarded.concat([Math.max(r1, r2)]);
-        kept = kept.concat([Math.min(r1, r2)]);
-      } else if (r2 <= reroll_number) {
-        discarded = discarded.concat([r2]);
-        r2 = randomInt(size_of_dice)
-        discarded = discarded.concat([Math.max(r1, r2)]);
-        kept = kept.concat([Math.min(r1, r2)]);
-      } else {
-        kept = kept.concat([Math.min(r1, r2)])
-        discarded = discarded.concat([Math.max(r1, r2)])
-      }
-    }
-  } else if(hasReroll){
-    reroll_info = getReroll(mods);
-    reroll_number = reroll_info.reroll_below;
-    for(i = 0; i < number_of_dice; i++){
-      res = randomInt(size_of_dice);
-      if(res <= reroll_number){
-        discarded = discarded.concat([res]);
-        kept = kept.concat([randomInt(size_of_dice)])
-      } else {
-        kept = kept.concat([res])
-      }
-    }
-  } else if (hasAdvantage) {
-    for(i = 0; i < number_of_dice; i++){
-      r1 = randomInt(size_of_dice);
-      r2 = randomInt(size_of_dice);
-      kept = kept.concat([Math.max(r1, r2)])
-      discarded = discarded.concat([Math.min(r1, r2)])
-    }
-  } else if (hasDisdvantage) {
-    for(i = 0; i < number_of_dice; i++){
-      r1 = randomInt(size_of_dice);
-      r2 = randomInt(size_of_dice);
-      kept = kept.concat([Math.min(r1, r2)])
-      discarded = discarded.concat([Math.max(r1, r2)])
-    }
-  }
-  return new RollInfo(kept, discarded);
-};
+let Mods = require('./dice_modifiers.js')
+let RollInfo = require('./roll_info.js').RollInfo
+let rolling = require('./rolling.js')
 
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
