@@ -40,10 +40,10 @@ class RollInfo {
   get_output(){
     var output = "";
     if(this.discarded.length > 0){
-      output = output + "Discarded: " + JSON.stringify(this.discarded) + "\n\tKeeping: ";
+      output = output + "\n```diff\n- Discarded: " + JSON.stringify(this.discarded) + "\n+ Keeping: " + JSON.stringify(this.kept) + " = " + this.get_sum() + "\n```";
+    } else {
+      output = output + "\n```diff\n+ " + JSON.stringify(this.kept) + " = " + this.get_sum() + "\n```";
     }
-    output = output + JSON.stringify(this.kept) + " = ";
-    output = output + this.get_sum();
     return output;
   }
 };

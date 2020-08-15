@@ -33,4 +33,25 @@ All commands will start with ``!r`` followed by additional information.
 ## Adding to a Server
 
 Click [here](https://discordapp.com/api/oauth2/authorize?client_id=704166655357354042&permissions=67584&scope=bot)!
- 
+
+## Development
+
+### Jison
+
+To rebuild the grammer files use:
+```sh
+jison grammer.jison
+``` 
+
+To run use:
+```sh
+node index.js
+```
+
+## Deploying on GCP
+
+```
+pkill node
+nohop node index.js & disown
+```
+

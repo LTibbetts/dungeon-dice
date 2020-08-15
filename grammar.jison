@@ -14,6 +14,7 @@ let rolling = require('./rolling.js')
 %%
 
 \s+                   /* skip whitespace */
+"help"                return 'HELP'
 "!".*                 return 'COMMENT'
 [0-9]+d[0-9]+\b       return 'DICE'
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
@@ -52,6 +53,13 @@ let rolling = require('./rolling.js')
 expressions
     : e end
         { return $2 + $1.get_output(); }
+    | help end
+        { return $1; } 
+    ;
+
+help
+    : HELP
+        {$$ = "for help!\nSee: https://ltibbetts.github.io/dungeon-dice/";}
     ;
 
 e
@@ -97,7 +105,7 @@ dice_mod
 
 end
     : COMMENT EOF
-        {$$ = $1.substring(1).trim() + "\n\t";}
+        {$$ = "``" + $1.substring(1).trim() + "``";}
     | EOF
-        {$$ = "\n\t"}
+        {$$ = ""}
     ;

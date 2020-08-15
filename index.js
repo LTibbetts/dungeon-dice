@@ -60,8 +60,6 @@ function run_message(message){
   if(message.content.startsWith(PREFIX)){
     current_input = Parser.remove_prefix(current_input, PREFIX)
     output = Parser.parse_dice(current_input)
-    output = output.replace(/\b20\b(?!$)/g, '**20**')
-    output = output.replace(/\b1\b(?!$)/g, '***1***')
     name = ""
     if(message.member.nickname){
       name = message.member.nickname
@@ -69,7 +67,7 @@ function run_message(message){
       name = message.author.username
     }
     // messageHistory.push([message.content, output])
-    message.channel.send(name + " rolled " + output)
+    message.channel.send("__" + name + "__ rolled " + output)
   }
 }
 
@@ -78,7 +76,7 @@ bot.on('message', message => {
 })
 
 bot.on('ready', () => {
-  bot.user.setActivity("!r", { type: "LISTENING", url: "https://www.github.com/LTibbetts/dungeon-dice"})
+  bot.user.setActivity("!r help", { type: "LISTENING", url: "https://www.github.com/LTibbetts/dungeon-dice"})
 })
 
 // bot.on('messageUpdate', (oldMessage, newMessage) => {
