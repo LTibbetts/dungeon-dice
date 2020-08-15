@@ -123,7 +123,7 @@ case 14:
 this.$ = [new Mods.Disadvantage()]
 break;
 case 15:
-this.$ = $$[$0-1].substring(2) + "\n\t";
+this.$ = $$[$0-1].substring(1).trim() + "\n\t";
 break;
 case 16:
 this.$ = "\n\t"

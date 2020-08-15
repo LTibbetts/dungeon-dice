@@ -97,7 +97,7 @@ dice_mod
 
 end
     : COMMENT EOF
-        {$$ = $1.substring(2) + "\n\t";}
+        {$$ = $1.substring(1).trim() + "\n\t";}
     | EOF
         {$$ = "\n\t"}
     ;
