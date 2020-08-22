@@ -76,7 +76,9 @@ bot.on('message', message => {
 })
 
 bot.on('ready', () => {
-  bot.user.setActivity("!r help", { type: "LISTENING", url: "https://www.github.com/LTibbetts/dungeon-dice"})
+  setInterval(() => {
+    bot.user.setActivity("!r help", { type: "LISTENING", url: "https://www.github.com/LTibbetts/dungeon-dice"})
+  }, 36000000);
 })
 
 // bot.on('messageUpdate', (oldMessage, newMessage) => {
