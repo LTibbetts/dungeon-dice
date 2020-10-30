@@ -16,22 +16,17 @@ let rolling = require('./rolling.js')
 \s+                   /* skip whitespace */
 "help"                return 'HELP'
 "!".*                 return 'COMMENT'
-[0-9]+d[0-9]+\b       return 'DICE'
-[0-9]+("."[0-9]+)?\b  return 'NUMBER'
-"r"[0-9]+\b           return 'REROLL'
-"adv"\b               return 'ADVANTAGE'
-"dis"\b               return 'DISADVANTAGE'
-"*"                   return '*'
-"/"                   return '/'
+"r"[0-9]+             return 'REROLL'
+("adv")               return 'ADVANTAGE'
+("dis")               return 'DISADVANTAGE'
+d[0-9]+               return 'SHORTDICE'
+[0-9]+d[0-9]+         return 'DICE'
+[0-9]+("."[0-9]+)?    return 'NUMBER'
 "-"                   return '-'
 "+"                   return '+'
-"^"                   return '^'
 "!"                   return '!'
-"%"                   return '%'
 "("                   return '('
 ")"                   return ')'
-"PI"                  return 'PI'
-"E"                   return 'E'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
@@ -83,7 +78,11 @@ mod
 dice
     : DICE
         {$$ = rolling.roll($1)}
+    | SHORTDICE
+        {$$ = rolling.roll($1)}
     | DICE dice_mods
+        {$$ = rolling.rollWithMods($1, $2)}
+    | SHORTDICE dice_mods
         {$$ = rolling.rollWithMods($1, $2)}
     ;
 

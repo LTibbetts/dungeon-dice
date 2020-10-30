@@ -8,6 +8,9 @@ var randomInt = function(max){
 
 var roll = function(dice_input){
   dice_info = dice_input.split('d');
+  if(dice_info[0] === ""){
+    dice_info = ["1", dice_info[1]];
+  }
   number_of_dice = dice_info[0];
   size_of_dice = dice_info[1];
   kept = [];
@@ -32,6 +35,9 @@ var rollWithMods = function(dice_input, mods){
   kept = []
   discarded = []
   dice_info = dice_input.split('d');
+  if(dice_info[0] === ""){
+    dice_info = ["1", dice_info[1]];
+  } 
   number_of_dice = dice_info[0];
   size_of_dice = dice_info[1];
   hasAdvantage = checkListFor(mods, Mods.Advantage);

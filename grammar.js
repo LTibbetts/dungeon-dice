@@ -72,12 +72,12 @@
   }
 */
 var grammar = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,4],$V1=[1,8],$V2=[1,9],$V3=[1,11],$V4=[1,12],$V5=[1,13],$V6=[1,14],$V7=[8,9,11,21,22],$V8=[1,19],$V9=[1,20],$Va=[1,21],$Vb=[8,9,11,18,19,20,21,22];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,4],$V1=[1,8],$V2=[1,9],$V3=[1,10],$V4=[1,12],$V5=[1,13],$V6=[1,14],$V7=[1,15],$V8=[8,9,11,22,23],$V9=[1,20],$Va=[1,21],$Vb=[1,22],$Vc=[8,9,11,19,20,21,22,23];
 var parser = {trace: function trace () { },
 yy: {},
-symbols_: {"error":2,"expressions":3,"e":4,"end":5,"help":6,"HELP":7,"+":8,"-":9,"(":10,")":11,"mod":12,"dice":13,"NUMBER":14,"DICE":15,"dice_mods":16,"dice_mod":17,"REROLL":18,"ADVANTAGE":19,"DISADVANTAGE":20,"COMMENT":21,"EOF":22,"$accept":0,"$end":1},
-terminals_: {2:"error",7:"HELP",8:"+",9:"-",10:"(",11:")",14:"NUMBER",15:"DICE",18:"REROLL",19:"ADVANTAGE",20:"DISADVANTAGE",21:"COMMENT",22:"EOF"},
-productions_: [0,[3,2],[3,2],[6,1],[4,3],[4,3],[4,3],[4,1],[4,1],[12,1],[13,1],[13,2],[16,2],[16,1],[17,1],[17,1],[17,1],[5,2],[5,1]],
+symbols_: {"error":2,"expressions":3,"e":4,"end":5,"help":6,"HELP":7,"+":8,"-":9,"(":10,")":11,"mod":12,"dice":13,"NUMBER":14,"DICE":15,"SHORTDICE":16,"dice_mods":17,"dice_mod":18,"REROLL":19,"ADVANTAGE":20,"DISADVANTAGE":21,"COMMENT":22,"EOF":23,"$accept":0,"$end":1},
+terminals_: {2:"error",7:"HELP",8:"+",9:"-",10:"(",11:")",14:"NUMBER",15:"DICE",16:"SHORTDICE",19:"REROLL",20:"ADVANTAGE",21:"DISADVANTAGE",22:"COMMENT",23:"EOF"},
+productions_: [0,[3,2],[3,2],[6,1],[4,3],[4,3],[4,3],[4,1],[4,1],[12,1],[13,1],[13,1],[13,2],[13,2],[17,2],[17,1],[18,1],[18,1],[18,1],[5,2],[5,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -107,37 +107,37 @@ break;
 case 9:
 this.$ = new RollInfo(Number(yytext), []);
 break;
-case 10:
+case 10: case 11:
 this.$ = rolling.roll($$[$0])
 break;
-case 11:
+case 12: case 13:
 this.$ = rolling.rollWithMods($$[$0-1], $$[$0])
 break;
-case 12:
+case 14:
 this.$ = $$[$0-1].concat($$[$0])
 break;
-case 13:
+case 15:
 this.$ = $$[$0]
 break;
-case 14:
+case 16:
 this.$ = [new Mods.Reroll(yytext)]
 break;
-case 15:
+case 17:
 this.$ = [new Mods.Advantage()]
 break;
-case 16:
+case 18:
 this.$ = [new Mods.Disadvantage()]
 break;
-case 17:
+case 19:
 this.$ = "``" + $$[$0-1].substring(1).trim() + "``";
 break;
-case 18:
+case 20:
 this.$ = ""
 break;
 }
 },
-table: [{3:1,4:2,6:3,7:[1,7],10:$V0,12:5,13:6,14:$V1,15:$V2},{1:[3]},{5:10,8:$V3,9:$V4,21:$V5,22:$V6},{5:15,21:$V5,22:$V6},{4:16,10:$V0,12:5,13:6,14:$V1,15:$V2},o($V7,[2,7]),o($V7,[2,8]),o([21,22],[2,3]),o($V7,[2,9]),o($V7,[2,10],{16:17,17:18,18:$V8,19:$V9,20:$Va}),{1:[2,1]},{4:22,10:$V0,12:5,13:6,14:$V1,15:$V2},{4:23,10:$V0,12:5,13:6,14:$V1,15:$V2},{22:[1,24]},{1:[2,18]},{1:[2,2]},{8:$V3,9:$V4,11:[1,25]},o($V7,[2,11],{17:26,18:$V8,19:$V9,20:$Va}),o($Vb,[2,13]),o($Vb,[2,14]),o($Vb,[2,15]),o($Vb,[2,16]),o($V7,[2,4]),o($V7,[2,5]),{1:[2,17]},o($V7,[2,6]),o($Vb,[2,12])],
-defaultActions: {10:[2,1],14:[2,18],15:[2,2],24:[2,17]},
+table: [{3:1,4:2,6:3,7:[1,7],10:$V0,12:5,13:6,14:$V1,15:$V2,16:$V3},{1:[3]},{5:11,8:$V4,9:$V5,22:$V6,23:$V7},{5:16,22:$V6,23:$V7},{4:17,10:$V0,12:5,13:6,14:$V1,15:$V2,16:$V3},o($V8,[2,7]),o($V8,[2,8]),o([22,23],[2,3]),o($V8,[2,9]),o($V8,[2,10],{17:18,18:19,19:$V9,20:$Va,21:$Vb}),o($V8,[2,11],{18:19,17:23,19:$V9,20:$Va,21:$Vb}),{1:[2,1]},{4:24,10:$V0,12:5,13:6,14:$V1,15:$V2,16:$V3},{4:25,10:$V0,12:5,13:6,14:$V1,15:$V2,16:$V3},{23:[1,26]},{1:[2,20]},{1:[2,2]},{8:$V4,9:$V5,11:[1,27]},o($V8,[2,12],{18:28,19:$V9,20:$Va,21:$Vb}),o($Vc,[2,15]),o($Vc,[2,16]),o($Vc,[2,17]),o($Vc,[2,18]),o($V8,[2,13],{18:28,19:$V9,20:$Va,21:$Vb}),o($V8,[2,4]),o($V8,[2,5]),{1:[2,19]},o($V8,[2,6]),o($Vc,[2,14])],
+defaultActions: {11:[2,1],15:[2,20],16:[2,2],26:[2,19]},
 parseError: function parseError (str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -622,48 +622,38 @@ case 0:/* skip whitespace */
 break;
 case 1:return 7
 break;
-case 2:return 21
+case 2:return 22
 break;
-case 3:return 15
+case 3:return 19
 break;
-case 4:return 14
+case 4:return 20
 break;
-case 5:return 18
+case 5:return 21
 break;
-case 6:return 19
+case 6:return 16
 break;
-case 7:return 20
+case 7:return 15
 break;
-case 8:return '*'
+case 8:return 14
 break;
-case 9:return '/'
+case 9:return 9
 break;
-case 10:return 9
+case 10:return 8
 break;
-case 11:return 8
+case 11:return '!'
 break;
-case 12:return '^'
+case 12:return 10
 break;
-case 13:return '!'
+case 13:return 11
 break;
-case 14:return '%'
+case 14:return 23
 break;
-case 15:return 10
-break;
-case 16:return 11
-break;
-case 17:return 'PI'
-break;
-case 18:return 'E'
-break;
-case 19:return 22
-break;
-case 20:return 'INVALID'
+case 15:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:help\b)/,/^(?:!.*)/,/^(?:[0-9]+d[0-9]+\b)/,/^(?:[0-9]+(\.[0-9]+)?\b)/,/^(?:r[0-9]+\b)/,/^(?:adv\b)/,/^(?:dis\b)/,/^(?:\*)/,/^(?:\/)/,/^(?:-)/,/^(?:\+)/,/^(?:\^)/,/^(?:!)/,/^(?:%)/,/^(?:\()/,/^(?:\))/,/^(?:PI\b)/,/^(?:E\b)/,/^(?:$)/,/^(?:.)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:help\b)/,/^(?:!.*)/,/^(?:r[0-9]+)/,/^(?:(adv))/,/^(?:(dis))/,/^(?:d[0-9]+)/,/^(?:[0-9]+d[0-9]+)/,/^(?:[0-9]+(\.[0-9]+)?)/,/^(?:-)/,/^(?:\+)/,/^(?:!)/,/^(?:\()/,/^(?:\))/,/^(?:$)/,/^(?:.)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"inclusive":true}}
 });
 return lexer;
 })();

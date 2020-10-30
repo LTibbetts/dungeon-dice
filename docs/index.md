@@ -6,6 +6,8 @@ Dungeon Dice is a simple dice rolling bot made for Discord.
 
 All commands will start with ``!r`` followed by additional information.
 
+NOTE: The only required space is after the ``!r``, all other spaces are optional.
+
 * Normal Roll
    * ``!r 1d20``
    * ``!r 2d6``
