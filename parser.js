@@ -1,7 +1,12 @@
 const grammer_parser = require('./grammar.js').parser
 
-function remove_prefix(input, prefix){
-  return input.substring(prefix.length)
+function remove_prefix(input, prefixes){
+  for(const prefix of prefixes){
+    if(input.startsWith(prefix)){
+      return input.substring(prefix.length)
+    }
+  };
+  return input;
 }
 
 function parse_dice(input){

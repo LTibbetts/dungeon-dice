@@ -6,7 +6,7 @@ const bot = new Discord.Client();
 
 const TOKEN = process.env.TOKEN;
 
-const PREFIX = "!r "
+const PREFIXES = ["!r ", "!roll "];
 
 // var createRingBuffer = function(length){
 //   /* https://stackoverflow.com/a/4774081 */
@@ -54,11 +54,20 @@ bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
 
+function detect_prefixes(input, prefixes){
+  for (const prefix of prefixes){
+    if(input.startsWith(prefix)){
+      return true;
+    }
+  };
+  return false;
+};
+
 function run_message(message){
   let current_input = message.content
-  
-  if(message.content.startsWith(PREFIX)){
-    current_input = Parser.remove_prefix(current_input, PREFIX)
+
+  if(detect_prefixes(current_input, PREFIXES)){
+    current_input = Parser.remove_prefix(current_input, PREFIXES)
     output = Parser.parse_dice(current_input)
     name = ""
     if(message.member.nickname){
